@@ -22,9 +22,6 @@ services:
   scheduler:
     <<: *redash-service
     command: scheduler
-    environment:
-      QUEUES: "celery"
-      WORKERS_COUNT: 1
     restart: always
 
   scheduled_worker:
@@ -73,3 +70,10 @@ services:
     links:
       - server:redash
     restart: always
+
+  worker:
+    <<: *redash-service
+    command: worker
+    environment:
+      QUEUES: "periodic emails default"
+      WORKERS_COUNT: 1
